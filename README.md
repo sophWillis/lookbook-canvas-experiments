@@ -1,34 +1,19 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Lookbook Canvas Experiments
 
-## Getting Started
+### General findings
 
-First, run the development server:
+We need to use drawRect to fit the canvas before drawing images onto it - otherwise, when animating, images stretch as the x coordinates increase
+We need to call drawImage twice on each image in order to create a looping effect
+We’ll have to set the canvas width as amount of columns _ width of images + space between images (7 _ 385 + 8) and calculate the amount of columns from the amount of images
 
-```bash
-npm run dev
-# or
-yarn dev
-```
+### Pros
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+No glitching occurring on resize 👍🏼
+We don’t need any resize events
+As far as I can see, not as much code will be needed
 
-You can start editing the page by modifying `pages/index.js`. The page auto-updates as you edit the file.
+### Cons/doubts
 
-[API routes](https://nextjs.org/docs/api-routes/introduction) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.js`.
-
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+If we’re drawing images to the canvas we’re not going to be using our editorial-media-assets widget where we have our hotspots config, so we’re going to have to rethink how we add them and potentially duplicate the code
+If we’re drawing images to the canvas we’re going to need x and y coordinates in our data to know where to draw each image on the canvas - are editors going to know how to do this? Alternatively, we’d need complex functions to work out the coordinates of each image
+We need to draw images to the canvas twice to give a looping effect - we can load the images just once but surely drawing them twice will have an impact on performance?
